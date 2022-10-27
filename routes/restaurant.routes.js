@@ -28,7 +28,7 @@ router.post("/restaurants", (req,res,next) =>{
 
     Restaurant.create(newRestaurant)
     .then(response => {
-        return City.findByIdAndUpdate (cityId, {$push: {restaurants: response._id } } );
+        return City.findByIdAndUpdate (cityId, {$push: {restaurants: response._id } }, {new: true} );
 })
 .then(response => res.json(response))
 .catch(error => {res.status(500) .json({message: "error creating restaurant", error})})});

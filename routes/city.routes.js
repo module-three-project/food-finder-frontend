@@ -21,8 +21,11 @@ router.post("/cities", (req,res,next) => {
 
 router.get("/cities", (req,res,next) =>{
     City.find()
-    // .populate("restaurants")
-    .then(allCity => res.json(allCity))
+    .populate("restaurants")
+    .then(allCity => { 
+        console.log(allCity)
+        res.json(allCity)
+    })
     .catch(error => {res.status(500).json({message: "error getting city", error})})
 })
 
