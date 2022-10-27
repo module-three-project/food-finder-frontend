@@ -24,6 +24,9 @@ app.use("/auth", authRoutes);
 const restaurantRoutes = require("./routes/restaurant.routes");
 app.use("/api", restaurantRoutes);
 
+const cityRoutes = require("./routes/city.routes");
+app.use("/api", cityRoutes);
+
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);
 

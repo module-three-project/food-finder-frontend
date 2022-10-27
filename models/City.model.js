@@ -5,6 +5,11 @@ const citySchema = new Schema({
         type: String,
         required: true,
     },
+    cityName: {
+        type: String,
+        required: true,
+        unique: true,
+    },
     description: {
         type: String,
         required: true,
