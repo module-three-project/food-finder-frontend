@@ -29,4 +29,55 @@ router.post("/restaurants", (req,res,next) =>{
     .catch(error => {res.status(500) .json({message: "error creating restaurant", error})})
 }); 
 
+router.get("/restaurants", (req,res,next) =>{
+    Restaurant.find()
+    .then(allRestaurants => res.json (allRestaurants))
+    .catch(error => {res.status(500).json({message: "error getting restaurant", error})})
+})
+
+router.get("/restaurants/:restaurantId", (req,res,next) =>{
+   
+    const {restaurantId} = req.params
+
+    if (!mongoose.Types.ObjectId.isValid(restaurantId)) {
+        res.status(400).json({ message: 'Specified id is not valid' });
+        return;
+    };
+
+    Restaurant.findById(restaurantId)
+    .then(foundRestaurant => res.json (foundRestaurant))
+    .catch(error => {res.status(500).json({message: "error getting restaurant", error})})
+
+});
+
+router.put("/restaurants/:restaurantId", (req,res,next) =>{
+    
+    const {restaurantId} = req.params
+
+    if (!mongoose.Types.ObjectId.isValid(restaurantId)) {
+        res.status(400).json({ message: 'Specified id is not valid' });
+        return;
+    };
+
+    Restaurant.findByIdAndUpdate(restaurantId, req.body, {new:true})
+    .then(updatedRestaurant => res.json(updatedRestaurant))
+    .catch(error => {res.status(500).json({message: "error updating restaurant", error})})
+
+});
+
+router.delete("/restaurants/:restaurantId", (req,res,next) => {
+    
+    const {restaurantId} = req.params
+
+    if (!mongoose.Types.ObjectId.isValid(restaurantId)) {
+        res.status(400).json({ message: 'Specified id is not valid' });
+        return;
+    };
+
+    Restaurant.findByIdAndDelete(restaurantId)
+    .then (() => res.json ({message: "Restaurant removed"}))
+    .catch(error => {res.status(500).json({message: "error deleting restaurant", error})})
+});
+
+
 module.exports = router;
