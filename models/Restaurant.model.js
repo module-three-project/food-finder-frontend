@@ -27,8 +27,10 @@ const restaurantSchema = new Schema({
     },
     // user:{
     //     type: String}
-
-    city: {type:Schema.Types.ObjectId, ref:"City"}
+    city: 
+    {
+        type: Schema.Types.ObjectId, ref: "City"
+    }
 });
 
 const Restaurant = model("Restuarant", restaurantSchema);

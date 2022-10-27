@@ -8,10 +8,13 @@ const citySchema = new Schema({
     description: {
         type: String,
         required: true,
-    }
-
+    },
+    restaurants: 
+    [{
+        type: Schema.Types.ObjectId, ref: "Restaurant"
+    }] 
 })
 
-const City = model("City", citySchema);
+const City = model("City", citySchema)
 
-module.exports = City;
+module.exports = City

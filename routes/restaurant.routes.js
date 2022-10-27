@@ -14,6 +14,7 @@ router.post("/restaurants", (req,res,next) =>{
         rating,
         cuisine,
         price,
+        cityId,
     } = req.body;
 
     const newRestaurant = {
@@ -22,6 +23,7 @@ router.post("/restaurants", (req,res,next) =>{
         rating,
         cuisine,
         price,
+        city: cityId
     }; 
 
     Restaurant.create(newRestaurant)
