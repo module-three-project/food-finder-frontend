@@ -16,15 +16,21 @@ const restaurantSchema = new Schema({
         type: Number,
         required: true,
     },
-    Cuisine: {
+    cuisine: {
         type: String,
         enum: ['Japanese', 'Italian', 'Mexican'],
         required: true,
     },
-    Price: {
+    price: {
         type: String,
         enum: ['€', '€€', '€€€']
     },
     // user:{
     //     type: String}
-})
+
+    city: {type:Schema.Types.ObjectId, ref:"City"}
+});
+
+const Restaurant = model("Restuarant", restaurantSchema);
+
+module.exports = Restaurant;
