@@ -7,7 +7,7 @@ const City = require('../models/City.model');
 const Restaurant = require('../models/Restaurant.model');
 
 
-router.post("/restuarants", isAuthenticated, (req,res,next) =>{
+router.post("/restaurants", (req,res,next) =>{
     const {
         name,
         address, 
@@ -29,3 +29,4 @@ router.post("/restuarants", isAuthenticated, (req,res,next) =>{
     .catch(error => {res.status(500) .json({message: "error creating restaurant", error})})
 }); 
 
+module.exports = router;
