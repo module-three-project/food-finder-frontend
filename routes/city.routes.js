@@ -7,7 +7,7 @@ const City = require('../models/City.model');
 const Restaurant = require('../models/Restaurant.model');
 
 
-router.post("/cities", (req,res,next) => {
+router.post("/cities", isAuthenticated, (req,res,next) => {
     const {
         country,
         cityName,
