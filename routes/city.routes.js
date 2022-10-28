@@ -29,5 +29,27 @@ router.get("/cities", (req,res,next) =>{
     .catch(error => {res.status(500).json({message: "error getting city", error})})
 })
 
+router.get('/cities/:cityId', (req, res, next) => {
+    const { cityId } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(cityId)) {
+        res.status(400).json({ message: 'Specified id is not valid' });
+        return;
+    }
+
+    // Each Project document has `tasks` array holding `_id`s of Task documents
+    // We use .populate() method to get swap the `_id`s for the actual Task documents
+    City.findById(cityId)
+        .populate('restaurants')
+        .then(city => res.json(city))
+        .catch(err => {
+            console.log("error getting city details...", err);
+            res.status(500).json({
+                message: "error getting city details...",
+                error: err
+            })
+        });
+});
+
 
 module.exports = router;
