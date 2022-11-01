@@ -18,7 +18,30 @@ const restaurantSchema = new Schema({
     },
     cuisine: {
         type: String,
-        enum: ['Japanese', 'Italian', 'Mexican'],
+        enum: [
+            "American",
+            "Austrian",
+            "Belgian",
+            "British",
+            "Carribean",
+            "Chinese",
+            "Dutch",
+            "French",
+            "Fusion",
+            "German",
+            "Greek",
+            "Indian",
+            "Italian",
+            "Japanese",
+            "Mexican",
+            "Polish",
+            "Portuguese",
+            "Swiss",
+            "Thai",
+            "Vietnamese",
+            "Other"
+          ]
+          ,
         required: true,
     },
     price: {
