@@ -7,7 +7,7 @@ const City = require('../models/City.model');
 const Restaurant = require('../models/Restaurant.model');
 
 
-router.post("/restaurants",(req,res,next) =>{
+router.post("/restaurants", isAuthenticated, (req,res,next) =>{
     const {
         name,
         address, 
@@ -28,6 +28,7 @@ router.post("/restaurants",(req,res,next) =>{
 
     Restaurant.create(newRestaurant)
     .then(response => {
+        console.log('newrestaurant:' ,newRestaurant, 'response:', response)
         return City.findByIdAndUpdate (cityId, {$push: {restaurants: response._id } }, {new: true} );
 })
 .then(response => res.json(response))
@@ -59,20 +60,43 @@ router.get("/restaurants/:restaurantId", (req,res,next) =>{
 
 });
 
-router.put("/restaurants/:restaurantId", isAuthenticated, (req,res,next) =>{
-    
-    const {restaurantId} = req.params
+
+
+
+
+
+router.put("/restaurants/:restaurantId", isAuthenticated, (req, res, next) => {
+    const { restaurantId } = req.params
 
     if (!mongoose.Types.ObjectId.isValid(restaurantId)) {
         res.status(400).json({ message: 'Specified id is not valid' });
         return;
     };
+ let restaurantInfo 
+    Restaurant.findByIdAndUpdate(restaurantId, req.body)
+        .then((updatedRestaurant) => {
+           restaurantInfo = updatedRestaurant
+             
 
-    Restaurant.findByIdAndUpdate(restaurantId, req.body, {new:true})
-    .then(updatedRestaurant => res.json(updatedRestaurant))
-    .catch(error => {res.status(500).json({message: "error updating restaurant", error})})
+                console.log('updatedrestoID?:', updatedRestaurant.city, req.body.cityId)
+                return City.findByIdAndUpdate(req.body.cityId, { $push: { restaurants: updatedRestaurant._id } });
+                
+            
+        })
+        .then(()=>{
+           return City.findByIdAndUpdate(restaurantInfo.city ,{$pull: {restaurants: restaurantInfo._id}})
+            
+        })
+        .then(()=>{res.json(restaurantInfo)})
 
-});
+        .catch(error => { res.status(500).json({ message: "error updating restaurant", error }) })
+})
+        
+
+
+
+
+
 
 router.delete("/restaurants/:restaurantId", isAuthenticated, (req,res,next) => {
     
