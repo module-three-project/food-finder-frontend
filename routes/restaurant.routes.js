@@ -73,21 +73,29 @@ router.put("/restaurants/:restaurantId", isAuthenticated, (req, res, next) => {
         return;
     };
  let restaurantInfo 
+ let newCityToMongoose
     Restaurant.findByIdAndUpdate(restaurantId, req.body)
         .then((updatedRestaurant) => {
            restaurantInfo = updatedRestaurant
+           newCityToMongoose = mongoose.Types.ObjectId(req.body.city)
+           if(restaurantInfo.city.equals(newCityToMongoose)==false){
              
 
-                console.log('updatedrestoID?:', updatedRestaurant.city, req.body.cityId)
-                return City.findByIdAndUpdate(req.body.cityId, { $push: { restaurants: updatedRestaurant._id } });
+                console.log('restoinfo=', restaurantInfo, 'reqbody=', req.body)
+                return City.findByIdAndUpdate(req.body.city, { $push: { restaurants: updatedRestaurant._id } });
                 
             
-        })
+        }})
         .then(()=>{
-           return City.findByIdAndUpdate(restaurantInfo.city ,{$pull: {restaurants: restaurantInfo._id}})
+            if(restaurantInfo.city.equals(newCityToMongoose)==false){
+                console.log('theres a difference')
+                console.log('consolelog:', restaurantInfo.city, newCityToMongoose)
+           return City.findByIdAndUpdate(restaurantInfo.city ,{$pull: {restaurants: restaurantInfo._id}});
             
-        })
-        .then(()=>{res.json(restaurantInfo)})
+} else {console.log('there the same')}})
+        .then(()=>{
+            
+            res.json(restaurantInfo)})
 
         .catch(error => { res.status(500).json({ message: "error updating restaurant", error }) })
 })
