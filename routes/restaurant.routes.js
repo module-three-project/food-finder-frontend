@@ -18,6 +18,10 @@ router.post("/restaurants", isAuthenticated, (req,res,next) =>{
         email,
         description,
     } = req.body;
+    if (name === "" || address === "" || rating === undefined || cuisine === 'Choose Cuisine' || price === 'Choose Price'|| cityId === 'Choose City' ) {
+        res.status(400).json({ message: "Please fill out all of the required fields" });
+        return;
+      }
 
     const newRestaurant = {
         name,

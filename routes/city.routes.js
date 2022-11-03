@@ -13,7 +13,10 @@ router.post("/cities", isAuthenticated, (req,res,next) => {
         cityName,
         description,
     } = req.body; 
-
+    if (country === "" || cityName === "" || description === "") {
+        res.status(400).json({ message: "Please fill out all of the fields" });
+        return;
+      }
     City.create({country, cityName, description, restaurants:[]})
     .then(response => res.json(response))
     .catch(error => {res.status(500) .json({message: "error creating city", error})})
