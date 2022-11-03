@@ -48,8 +48,8 @@ const restaurantSchema = new Schema({
         type: String,
         enum: ['€', '€€', '€€€']
     },
-    // user:{
-    //     type: String}
+    email:{
+        type: String},
     city: 
     {
         type: Schema.Types.ObjectId, ref: "City"

@@ -15,6 +15,7 @@ router.post("/restaurants", isAuthenticated, (req,res,next) =>{
         cuisine,
         price,
         cityId,
+        email,
     } = req.body;
 
     const newRestaurant = {
@@ -23,7 +24,8 @@ router.post("/restaurants", isAuthenticated, (req,res,next) =>{
         rating,
         cuisine,
         price,
-        city: cityId
+        city: cityId,
+        email: email
     }; 
 
     Restaurant.create(newRestaurant)
@@ -65,7 +67,7 @@ router.get("/restaurants/:restaurantId", (req,res,next) =>{
 
 
 
-router.put("/restaurants/:restaurantId", isAuthenticated, (req, res, next) => {
+router.put("/restaurants/:restaurantId", (req, res, next) => {
     const { restaurantId } = req.params
 
     if (!mongoose.Types.ObjectId.isValid(restaurantId)) {
