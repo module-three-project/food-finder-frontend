@@ -16,6 +16,7 @@ router.post("/restaurants", isAuthenticated, (req,res,next) =>{
         price,
         cityId,
         email,
+        description,
     } = req.body;
 
     const newRestaurant = {
@@ -24,6 +25,7 @@ router.post("/restaurants", isAuthenticated, (req,res,next) =>{
         rating,
         cuisine,
         price,
+        description,
         city: cityId,
         email: email
     }; 

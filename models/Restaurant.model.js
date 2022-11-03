@@ -10,7 +10,7 @@ const restaurantSchema = new Schema({
         type: String,
         required: true,
         unique: true,
-        
+
     },
     rating: {
         type: Number,
@@ -40,17 +40,21 @@ const restaurantSchema = new Schema({
             "Thai",
             "Vietnamese",
             "Other"
-          ]
-          ,
+        ]
+        ,
         required: true,
     },
     price: {
         type: String,
         enum: ['€', '€€', '€€€']
     },
-    email:{
-        type: String},
-    city: 
+    email: {
+        type: String
+    },
+    description: {
+        type: String
+    },
+    city:
     {
         type: Schema.Types.ObjectId, ref: "City"
     }
