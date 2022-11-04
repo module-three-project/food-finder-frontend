@@ -40,7 +40,9 @@ router.post("/restaurants", isAuthenticated, (req,res,next) =>{
         return City.findByIdAndUpdate (cityId, {$push: {restaurants: response._id } }, {new: true} );
 })
 .then(response => res.json(response))
-.catch(error => {res.status(500) .json({message: "error creating restaurant", error})})});
+.catch(error => {
+    console.log(error)
+    res.status(500) .json({message: "error creating restaurant", error})})});
 
 
 
